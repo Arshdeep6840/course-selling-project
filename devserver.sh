@@ -1,3 +1,10 @@
 #!/bin/sh
+
+# Activate the virtual environment
 source .venv/bin/activate
-python -u -m flask --app main run -p $PORT --debug
+
+# Set the python path to include the project root
+export PYTHONPATH=$PYTHONPATH:$(pwd)
+
+# Run the flask app
+.venv/bin/python -u -m flask --app main run --debug -p 8081

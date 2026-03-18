@@ -1,0 +1,142 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<style>
+/* Page Layout */
+.course-container {
+    margin-top: 40px;
+}
+
+/* Left Content */
+.course-content {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+/* Right Sidebar */
+.course-sidebar {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 100px;
+}
+
+/* Title */
+.course-title {
+    font-weight: 700;
+}
+
+/* Price */
+.price {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1cc88a;
+}
+
+/* Button */
+.btn-enroll {
+    width: 100%;
+    background: linear-gradient(135deg, #4e73df, #1cc88a);
+    border: none;
+    color: white;
+    padding: 10px;
+}
+.btn-enroll:hover {
+    opacity: 0.9;
+}
+
+/* Features */
+.course-features li {
+    margin-bottom: 10px;
+}
+</style>
+
+<div class="container course-container">
+    <div class="row">
+
+        <!-- 📚 Course Details -->
+        <div class="col-md-8">
+            <div class="course-content">
+                <img src="{{ course.image_file }}" class="img-fluid rounded mb-3" alt="{{ course.title }}">
+                <h2 class="course-title">{{ course.title }}</h2>
+                <p class="text-muted">📅 {{ course.date_posted.strftime('%B %d, %Y') }}</p>
+
+                <hr>
+
+                <h5>Description</h5>
+                <p>{{ course.description }}</p>
+
+                <hr>
+
+                <h5>What You'll Learn</h5>
+                <ul>
+                    <li>✔ Real-world practical skills</li>
+                    <li>✔ Hands-on projects</li>
+                    <li>✔ Industry-relevant knowledge</li>
+                </ul>
+
+                {% if current_user.is_authenticated and current_user.is_enrolled(course) %}
+                <hr>
+                <h5>Course Content</h5>
+                <div class="accordion" id="videoAccordion">
+                    {% for video in course.videos %}
+                    <div class="card">
+                        <div class="card-header" id="heading{{ video.id }}">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ video.id }}" aria-expanded="false" aria-controls="collapse{{ video.id }}">
+                                    {{ video.title }}
+                                </button>
+                            </h5>
+                        </div>
+
+                        <div id="collapse{{ video.id }}" class="collapse" aria-labelledby="heading{{ video.id }}" data-parent="#videoAccordion">
+                            <div class="card-body">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe class="embed-responsive-item" src="{{ video.video_url }}" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- 💰 Sidebar -->
+        <div class="col-md-4">
+            <div class="course-sidebar">
+                <h4 class="price">₹{{ course.price }}</h4>
+
+                {% if current_user.is_authenticated %}
+                    {% if current_user.is_enrolled(course) %}
+                        <div class="alert alert-success">
+                            You are enrolled in this course!
+                        </div>
+                    {% else %}
+                        <a href="{{ url_for('courses.enroll', course_id=course.id) }}" class="btn btn-enroll mt-3">Enroll Now</a>
+                    {% endif %}
+                {% else %}
+                    <a href="{{ url_for('users.login') }}" class="btn btn-enroll mt-3">Login to Enroll</a>
+                {% endif %}
+
+
+                <hr>
+
+                <ul class="list-unstyled course-features">
+                    <li>🎥 Full Lifetime Access</li>
+                    <li>📱 Access on Mobile & Desktop</li>
+                    <li>📜 Certificate of Completion</li>
+                    <li>👨‍🏫 Instructor Support</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,144 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<style>
+/* Hero Section */
+.hero {
+    background: linear-gradient(135deg, #4e73df, #1cc88a);
+    color: white;
+    padding: 120px 20px;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 50px;
+}
+.hero h1 {
+    font-weight: 700;
+}
+.hero p {
+    font-size: 18px;
+}
+
+/* Section Title */
+.section-title {
+    font-weight: 700;
+    margin-bottom: 40px;
+}
+
+/* Course Cards */
+.course-card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+.course-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 35px rgba(0,0,0,0.2);
+}
+
+.course-card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Buttons */
+.btn-custom {
+    background: linear-gradient(135deg, #4e73df, #1cc88a);
+    border: none;
+    color: white;
+}
+.btn-custom:hover {
+    opacity: 0.9;
+}
+
+/* About Section */
+.about {
+    background: #f8f9fc;
+    border-radius: 12px;
+}
+
+/* Small UI polish */
+.card-title a {
+    text-decoration: none;
+    font-weight: 600;
+}
+.card-title a:hover {
+    color: #4e73df;
+}
+</style>
+
+<!-- 🔥 Hero Section -->
+<div class="hero">
+    <h1 class="display-4">Learn Skills That Matter 🚀</h1>
+    <p class="lead">Master in-demand skills with real-world projects and expert guidance.</p>
+    <a class="btn btn-light btn-lg mt-3" href="{{ url_for('courses.all_courses') }}">
+        Explore Courses
+    </a>
+</div>
+
+<!-- 🔥 Featured Courses -->
+<div class="container">
+    <h2 class="text-center section-title">🔥 Featured Courses</h2>
+    <div class="row">
+        {% for course in courses %}
+        <div class="col-md-4 mb-4">
+            <div class="card course-card h-100">
+
+                <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="{{ course.title }}">
+
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{{ url_for('courses.course', course_id=course.id) }}">
+                            {{ course.title }}
+                        </a>
+                    </h5>
+
+                    <p class="card-text text-muted">
+                        {{ course.description[:100] }}...
+                    </p>
+                </div>
+
+                <div class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
+                    <strong class="text-success">₹{{ course.price }}</strong>
+                    <a href="{{ url_for('courses.course', course_id=course.id) }}" class="btn btn-custom btn-sm">
+                        View
+                    </a>
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="text-center mt-4">
+        <a href="{{ url_for('courses.all_courses') }}" class="btn btn-primary">See More Courses</a>
+    </div>
+</div>
+
+<!-- 🔥 About Section -->
+<div class="about py-5 mt-5">
+    <div class="container text-center">
+        <h2 class="section-title">Why Choose Us?</h2>
+
+        <p class="lead text-muted">
+            We provide high-quality, practical courses designed to help you grow faster and achieve your career goals.
+        </p>
+
+        <div class="row mt-5">
+            <div class="col-md-4">
+                <h5>🎯 Practical Learning</h5>
+                <p class="text-muted">Hands-on projects with real-world applications.</p>
+            </div>
+            <div class="col-md-4">
+                <h5>👨‍🏫 Expert Mentors</h5>
+                <p class="text-muted">Learn from industry professionals.</p>
+            </div>
+            <div class="col-md-4">
+                <h5>📈 Career Growth</h5>
+                <p class="text-muted">Boost your skills and job opportunities.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Enroll in {{ course.title }}</h2>
+                </div>
+                <div class="card-body">
+                    <p>You are about to enroll in the following course:</p>
+                    <p><strong>Course:</strong> {{ course.title }}</p>
+                    <p><strong>Price:</strong> ₹{{ course.price }}</p>
+                    <form method="POST" action="{{ url_for('courses.enroll', course_id=course.id) }}">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

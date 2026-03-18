@@ -4,3 +4,11 @@ autopep8
 
 # App
 flask
+Flask-WTF
+Flask-SQLAlchemy
+Flask-Login
+Flask-Bcrypt
+email-validator
+bcrypt
+Pillow
+Flask-Migrate

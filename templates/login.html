@@ -1,0 +1,125 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<style>
+/* Center Layout */
+.auth-container {
+    min-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Card */
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 35px;
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+}
+
+/* Title */
+.auth-title {
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Inputs */
+.form-control {
+    border-radius: 10px;
+}
+
+/* Button */
+.btn-custom {
+    background: linear-gradient(135deg, #4e73df, #1cc88a);
+    border: none;
+    color: white;
+    padding: 10px;
+}
+.btn-custom:hover {
+    opacity: 0.9;
+}
+
+/* Footer */
+.auth-footer {
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* Forgot link */
+.forgot-link {
+    float: right;
+    font-size: 13px;
+}
+</style>
+
+<div class="auth-container">
+
+    <div class="auth-card">
+
+        <!-- 🔥 Title -->
+        <h3 class="auth-title">Welcome Back 👋</h3>
+
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+
+            <!-- Email -->
+            <div class="form-group mb-3">
+                {{ form.email.label(class="form-label") }}
+                {% if form.email.errors %}
+                    {{ form.email(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.email(class="form-control") }}
+                {% endif %}
+            </div>
+
+            <!-- Password -->
+            <div class="form-group mb-2">
+                {{ form.password.label(class="form-label") }}
+                <a href="#" class="forgot-link">Forgot?</a>
+                {% if form.password.errors %}
+                    {{ form.password(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.password(class="form-control") }}
+                {% endif %}
+            </div>
+
+            <!-- Remember -->
+            <div class="form-check mb-3">
+                {{ form.remember(class="form-check-input") }}
+                {{ form.remember.label(class="form-check-label") }}
+            </div>
+
+            <!-- Submit -->
+            <div class="d-grid">
+                {{ form.submit(class="btn btn-custom w-100") }}
+            </div>
+
+        </form>
+
+        <!-- Footer -->
+        <div class="auth-footer">
+            <small class="text-muted">
+                Don't have an account?
+                <a href="{{ url_for('users.register') }}">Sign Up</a>
+            </small>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock content %}
