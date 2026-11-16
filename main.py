@@ -40,4 +40,4 @@ def about():
     return render_template('about.html', title='About')
 
 if __name__ == "__main__":
-    app.run(port=int(os.environ.get('PORT', 80)))
+    app.run(port=int(os.environ.get('PORT', 5000)))
